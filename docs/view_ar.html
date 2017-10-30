@@ -1,0 +1,48 @@
+<!doctype HTML>
+<html>
+<script src="js/linkparam.js"></script>
+<script src="js/ar_data.js"></script>
+<script src="js/aframe.js"></script>
+<script src="js/aframe-ar.min.js"></script>
+<!--
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
+-->
+  <body style='margin : 0px; overflow: hidden;'>
+    <a-scene id="ar_scene" embedded arjs>
+		<a-marker preset="hiro">
+            <a-box position='0 0.5 0' material='color: blue;opacity:0.5'></a-box>
+  	</a-marker>
+		<a-entity camera></a-entity>
+    </a-scene>
+		<script>
+		//---- Evaluate Link Paramaters ----
+		var vLinkParam = new LinkParam();
+		vLinkParam.init(document);
+
+		function inject3Dcode(pHTML3D) {
+			// vNode3D is the root node for injected 3D model
+			var vNode3D = document.createElement("SCENEAR");
+			// place code inside vNode3D to create the DOM structure from string 'pHTML3D'
+			vNode3D.innerHTML = pHTML3D;
+			// inject last node first by insertBefore preseve order of 3D models
+			var vMax = vNode3D.childNodes.length - 1; //highest index is vMax
+			var newItem = null;
+			// vARscene is the DOM where the 3D model is injected
+			var vARscene = document.getElementById("ar_scene");
+			// iterate over inject nodes
+			//for (var i = 0; i <= vMax; i++) {
+			for (var i = vMax; i >= 0; i--) {
+				newItem = vNode3D.childNodes[i];
+				//vARscene.insertBefore(newItem, vARscene.childNodes[0]);
+			};
+		}
+		if (vLinkParam.exists("html3d")) {
+			// html3d contains the 3D model submitted to this file
+			inject3Dcode(vLinkParam.getValue("html3d"));
+		} else {
+			inject3Dcode(getDefaultModelAR())
+		};
+		</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+  <head>
+    <title>3D Model AR.js starterL</title>
+    <meta charset="utf-8">
+    <script src="js/linkparam.js"></script>
+
+    <link  type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
+    <link  type="text/css" href="css/app.css" rel="stylesheet" />
+      <style type="text/css">
+      body {font-family:verdana, sans-serif;}
+
+       </style>
+
+  </head>
+  <body  bgcolor="#f2f2f2">
+    <h2>Select Geolocation with OpenLayers and Callback URL</h2>
+  	<p>This is an example consists of two files.
+  	<ul>
+  		<li>
+  			<tt>index.html</tt> (this file)
+  		</li>
+      <li>
+  			<tt>view_ar.html</tt> that reads the 3D model from the URL parameter
+  		</li>
+      <li>
+  			<tt>basic_ar.html</tt> shows a basic 3D model with a blue, transparent cube
+  		</li>
+  	</ul>
+  	This file <tt>index.html</tt> calls <tt>view_ar.html</tt> lets the user display augmented reality object, defined by HTML code in the textarea.
+  	The textarea is parsed by the XML parser browser and converted in a JSON file. If successful, the JSON is submitted via link parameter (see <tt>js/linkparam.js</tt>) to the <tt>view_ar.html</tt>. The parameter of the browser URL contains all definitions of 3D model.
+  	 <tt>view_ar.html</tt> displays the 3D model. You can use the full browser URL with parameter to display the model by a link from Wikiversity.
+  	Press submit button "Display 3D Model" and place the 3D model on the selected marker in the camera image of your laptop or your smart phone.
+  	The   your browser location (<a href="https://github.com/niebert/AR.js/archive/master.zip" target="_blank">Download Demo</a>).
+
+  	</p>
+  	<hr>
+  	<!-- next DIV element implements the main CallBack Structure -->
+  	<div style="margins:30px">
+   		<!-- <b>Call <tt>selectlocation.html</tt> with a HTML form:</b> -->
+    	<form id="modelsubmitfomr" action="view_ar.html" target="_blank" method="GET" onsubmit="parseHTML3D()">
+        <input type="string" id="callback" name="callback" size="15" value=""><br/>
+         	<button class="submitbutton" type="submit">
+    				<i class="fa fa-globe" aria-hidden="true"></i> Display 3D Model
+				</button>
+		  <textarea name="json3d" id="json3d" rows="10" cols="125" Xstyle="display:none"></textarea>
+    	</form>
+    	<hr>
+      <b>3D-Object:</b> <br/>
+      <textarea  id="html3d" rows="10" cols="125">
+<a-marker preset="hiro">
+    <a-box position='0 0.5 0' material='color: blue;opacity: 0.5'></a-box>
+</a-marker>
+    	</textarea>
+    </div>
+    <div id="ARJS" style="display:none"></div>
+    <!-- The following script reads link parameters and sets the geolocation if "selectgeolocation.html" return one -->
+    <script>
+      function el(id) {
+        return document.getElementById(id);
+      };
+
+      //---- Evaluate Link Paramaters ----
+      var vLinkParam = new LinkParam();
+      vLinkParam.init(document);
+
+      // load html3d from LinkParameter if available
+      if (vLinkParam.exists("html3d")) {
+      	// html3d contains the 3D model submitted to this file
+      	el("html3d").value = vLinkParam.getValue("html3d");
+      };
+
+      //---- get 3D model of HTML and and remove script tags (not allowed for security reason)
+      function parseHTML3D() {
+        var v3Dmodel = el("html3d").value;
+        // remove all script tags
+        v3Dmodel = v3Dmodel.replace(/<script.*>.*<\/script>/igm, " ");
+        el("json3d").value = v3Dmodel;
+      }
+
+      //----- defined callback -----
+      el("callback").value = document.location.href;
+    </script>
+    <hr>
+     <b>GitHub:</b> View <a href="https://github.com/niebert/AR.js" target="_blank">repository on GitHub</a>
+    <hr>
+  </body>
+</html>
