@@ -1,0 +1,38 @@
+<!doctype HTML>
+<html>
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"> </script>
+  <body style='margin : 0px; overflow: hidden;'>
+    <a-scene>
+  	<a-marker id="mymarker" preset="hiro">
+      <a-box position='0 0.5 0' material='color: blue;opacity:0.5'></a-box>
+  	</a-marker>
+  	<a-entity camera></a-entity>
+    </a-scene>
+    <script>
+      function docel(pID) {
+        return document.getElementById(pID);
+      };
+
+      function doccr(pTagID) {
+        return document.createElement(pTagID);
+      };
+
+      function addNewElements2Scene() {
+        var vBox = doccr("a-box");
+        vBox.setAttribute("position","1 1.5 1");
+        vBox.setAttribute("material","color: red");
+        docel("mymarker").appendChild(vBox);
+      };
+
+      document.onreadystatechange = () => {
+        if (document.readyState === 'complete') {
+          // document ready
+          console.log("Document is ready for object inject");
+          addNewElements2Scene();
+        }
+      };
+
+    </script>
+  </body>
+</html>

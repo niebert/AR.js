@@ -12,7 +12,7 @@
 - No stereo, you hold it in your hand, not in a head-mounted-display
 - you got a touch screen. easily clickable anywhere on the viewport. no mouseover
 - you can have headset with microphone
-- Speech API + voice recognition: you can t£alk to your phone, the phone talk back to you
+- Speech API + voice recognition: you can talk to your phone, the phone talk back to you
 
 # Able to go mainstream ?
 tldr; No good for mainstream public, but it is perfect to experiment today with Augmented Reality.
@@ -26,7 +26,7 @@ tldr; No good for mainstream public, but it is perfect to experiment today with 
 
 - Nevertheless, markerless technology are pretty new
 - markerless are not available in opensource, they requires to have specific license, and for-a-fee license.
-- nothing bad with that. but it definitly make it 
+- nothing bad with that. but it definitly make it
 
 # APP Model
 - a normal webvr application played thru artookit's webvr polyfill
@@ -36,7 +36,7 @@ tldr; No good for mainstream public, but it is perfect to experiment today with 
 # APP IDEA: Tamagotchi in AR on your mobile phone
 - you virtual pet on your desk
 - you can chat with it.
-- you talk and the pet understand what you say. 
+- you talk and the pet understand what you say.
 
 # APP IDEA: new resume
 - all in #AR
@@ -44,11 +44,11 @@ tldr; No good for mainstream public, but it is perfect to experiment today with 
 - some effect like starwar's hologram
 
 # APP IDEA: annotate your world
-- how to do an application to anotate your space.
+- how to do an application to annotate your space.
 - likely based on a barcode marker, very scalable
 - for each marker, one can attach an anotation
-- e.g. i put one marker near the fridge, and 
-- what is an annotation ? it is a AR experience
+- e.g. i put one marker near the fridge, and
+- what is an annotation? it is a AR experience
   - three.js app from the editor ?
   - some aframe ?
 - edit that content in VR ? maybe later. edit it on desktop for now

@@ -1,8 +1,9 @@
 <!doctype html>
   <head>
-    <title>3D Model AR.js starterL</title>
+    <title>AR.js LinkParam</title>
     <meta charset="utf-8">
     <script src="js/linkparam.js"></script>
+    <script src="js/ar_data.js"></script>
 
     <link  type="text/css" href="css/font-awesome.min.css" rel="stylesheet" />
     <link  type="text/css" href="css/app.css" rel="stylesheet" />
@@ -13,14 +14,14 @@
 
   </head>
   <body  bgcolor="#f2f2f2">
-    <h2>Select Geolocation with OpenLayers and Callback URL</h2>
-  	<p>This is an example consists of two files.
+    <h2>Test Submission of a 3D Model to AR.js with linkparam.js</h2>
+  	<p>This is an example consists of three files.
   	<ul>
   		<li>
-  			<tt>index.html</tt> (this file)
+  			<tt>index_linparam.html</tt> (this file)
   		</li>
       <li>
-  			<tt>view_ar.html</tt> that reads the 3D model from the URL parameter
+  			<tt>view_ar_linkparam.html</tt> that reads the 3D model from the URL parameter, creates a camera error.
   		</li>
       <li>
   			<tt>basic_ar.html</tt> shows a basic 3D model with a blue, transparent cube
@@ -38,47 +39,70 @@
   	<div style="margins:30px">
    		<!-- <b>Call <tt>selectlocation.html</tt> with a HTML form:</b> -->
     	<form id="modelsubmitfomr" action="view_ar.html" target="_blank" method="GET" onsubmit="parseHTML3D()">
-        <input type="string" id="callback" name="callback" size="15" value=""><br/>
+        <input type="string" id="callback" Xname="callback" size="15" value=""><br/>
          	<button class="submitbutton" type="submit">
     				<i class="fa fa-globe" aria-hidden="true"></i> Display 3D Model
 				</button>
-		  <textarea name="json3d" id="json3d" rows="10" cols="125" Xstyle="display:none"></textarea>
+		  <textarea name="jsondata" id="jsondata" rows="10" cols="125" Xstyle="display:none"></textarea>
     	</form>
     	<hr>
       <b>3D-Object:</b> <br/>
       <textarea  id="html3d" rows="10" cols="125">
-<a-marker preset="hiro">
-    <a-box position='0 0.5 0' material='color: blue;opacity: 0.5'></a-box>
-</a-marker>
+[
+  {
+    "tag": "a-box",
+    "attr": {
+        "position": "1 1.5 1",
+        "material": "color: red;opacity: 0.5"
+    },
+    "child": []
+  }
+]
     	</textarea>
     </div>
     <div id="ARJS" style="display:none"></div>
     <!-- The following script reads link parameters and sets the geolocation if "selectgeolocation.html" return one -->
     <script>
-      function el(id) {
-        return document.getElementById(id);
-      };
-
       //---- Evaluate Link Paramaters ----
       var vLinkParam = new LinkParam();
       vLinkParam.init(document);
 
+      function docel(id) {
+        return document.getElementById(id);
+      };
+
+      function doccr(pTagID) {
+        return document.createElement(pTagID);
+      };
+
       // load html3d from LinkParameter if available
       if (vLinkParam.exists("html3d")) {
       	// html3d contains the 3D model submitted to this file
-      	el("html3d").value = vLinkParam.getValue("html3d");
+      	docel("html3d").value = vLinkParam.getValue("html3d");
       };
 
       //---- get 3D model of HTML and and remove script tags (not allowed for security reason)
       function parseHTML3D() {
-        var v3Dmodel = el("html3d").value;
+        var v3Dmodel = docel("html3d").value;
         // remove all script tags
-        v3Dmodel = v3Dmodel.replace(/<script.*>.*<\/script>/igm, " ");
-        el("json3d").value = v3Dmodel;
+        //v3Dmodel = v3Dmodel.replace(/<script.*>.*<\/script>/igm, " ");
+        //var vDOM = doccr("DOM");
+        console.log("v3Dmodel: "+v3Dmodel);
+        var vJSON = parseJSON3D(v3Dmodel);
+        docel("jsondata").value = JSON.stringify(vJSON,null,4);
       }
 
       //----- defined callback -----
-      el("callback").value = document.location.href;
+      docel("callback").value = document.location.href;
+
+      //--- Perform conversion if Document is ready
+      document.onreadystatechange = () => {
+        if (document.readyState === 'complete') {
+          // document ready
+          console.log("Document is ready for parsing");
+          parseHTML3D();
+        }
+      };
     </script>
     <hr>
      <b>GitHub:</b> View <a href="https://github.com/niebert/AR.js" target="_blank">repository on GitHub</a>
